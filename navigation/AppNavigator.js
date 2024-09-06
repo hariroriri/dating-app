@@ -26,6 +26,7 @@ const AppNavigator = () => (
       },
       tabBarActiveTintColor: 'tomato',   // Active icon color
       tabBarInactiveTintColor: 'gray',   // Inactive icon color
+      headerShown: false
     })}
   >
     <Tab.Screen name="Home" component={HomeScreen} />

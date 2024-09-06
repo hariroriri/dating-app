@@ -1,168 +1,201 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, SafeAreaView, Image } from 'react-native';
+import dummyUsers from '../dummyUsers';
+
 
 const HomeScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    <ImageBackground
-      source={require('../assets/home.jpg')}
-      style={styles.loveQuoteContainer}
-      imageStyle={{ borderRadius: 12 }}
-    >
-      <Text style={styles.loveQuoteText}>
-        "Love is not just looking at each other, it's looking in the same direction." - Antoine de Saint-Exupery
-      </Text>
-    </ImageBackground>
-
-    <ScrollView contentContainerStyle={styles.contentContainer}>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Discover New People</Text>
-        <Text style={styles.sectionDescription}>
-          Swipe through exciting new profiles tailored to your preferences!
-        </Text>
-        <TouchableOpacity style={styles.swipeButton}>
-          <Text style={styles.swipeButtonText}>Start Swiping</Text>
+  <SafeAreaView style={styles.safeArea}>
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.appName}>Lovv</Text>
+        <TouchableOpacity style={styles.profileIcon} onPress={() => navigation.navigate('Profile')}>
+          <Text style={styles.profileText}>Profile</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Your Match Journey</Text>
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBar}></View>
+      {/* Swipe Cards */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.swipeCardsContainer}>
+        {dummyUsers.map((user) => (
+          <View key={user.id} style={styles.card}>
+            <Image source={user.image} style={styles.userImage} />
+            <Text style={styles.cardText}>{user.name}, {user.age}</Text>
+            <Text style={styles.cardDescription}>{user.description}</Text>
+          </View>
+        ))}
+      </ScrollView>
+
+      {/* Search Bar */}
+      <View style={styles.searchBarContainer}>
+        <TextInput style={styles.searchBar} placeholder="Search matches..." />
+      </View>
+
+      {/* Main Features */}
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Discover Matches</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Discover')}>
+            <Text style={styles.buttonText}>Find New Matches</Text>
+          </TouchableOpacity>
         </View>
-        <Text style={styles.progressText}>70% to your next match</Text>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Improve Profile</Text>
-        </TouchableOpacity>
-      </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Date Ideas</Text>
-        <Text style={styles.sectionDescription}>
-          Looking for a fun date idea? Try a sunset picnic at the park, stargazing, or a cooking class together!
-        </Text>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Get More Ideas</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Filter Matches</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Filters')}>
+            <Text style={styles.buttonText}>Apply Filters</Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.navigationContainer}>
-        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Auth', { screen: 'Login' })}>
-          <Text style={styles.navButtonText}>Login</Text>
+        {/* Calls to Action */}
+        <View style={styles.section}>
+          <TouchableOpacity style={styles.ctaButton} onPress={() => navigation.navigate('Upgrade')}>
+            <Text style={styles.ctaButtonText}>Upgrade for Premium Features</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+
+      {/* Bottom Navigation Bar */}
+      {/* <View style={styles.bottomNavBar}>
+        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.navButtonText}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Auth', { screen: 'Signup' })}>
-          <Text style={styles.navButtonText}>Signup</Text>
+        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Messages')}>
+          <Text style={styles.navButtonText}>Messages</Text>
         </TouchableOpacity>
-      </View>
-    </ScrollView>
-  </View>
+        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Matches')}>
+          <Text style={styles.navButtonText}>Matches</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Profile')}>
+          <Text style={styles.navButtonText}>Profile</Text>
+        </TouchableOpacity>
+      </View> */}
+    </View>
+  </SafeAreaView>
 );
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f4f4f9',
+  },
   container: {
     flex: 1,
     backgroundColor: '#f4f4f9',
   },
-  contentContainer: {
-    padding: 20,
-    alignItems: 'center',
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    backgroundColor: '#fff',
+    elevation: 3,
+    paddingTop: 25,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
   },
-  loveQuoteContainer: {
-    width: '100%',
-    height: 150,
+  appName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#ff6f61',
+  },
+  profileIcon: {
+    padding: 8,
+  },
+  swipeCardsContainer: {
+    height: 320,
+    marginVertical: 20,
+  },
+  card: {
+    width: 240,
+    height: '100%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginHorizontal: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 15,
-    marginVertical: 20,
-    marginHorizontal: '5%',
-    borderRadius: 12,
-    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    elevation: 2,
   },
-  loveQuoteText: {
-    color: '#fff',
+  userImage: {
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    marginBottom: 12,
+  },
+  cardText: {
     fontSize: 18,
-    fontStyle: 'italic',
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 6,
+  },
+  cardDescription: {
+    fontSize: 14,
+    color: '#666',
     textAlign: 'center',
+    paddingHorizontal: 10,
+  },
+  searchBarContainer: {
+    paddingHorizontal: 15,
+    marginVertical: 10,
+  },
+  searchBar: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 10,
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  contentContainer: {
+    paddingHorizontal: 15,
   },
   section: {
     backgroundColor: '#fff',
     marginVertical: 10,
     padding: 20,
-    borderRadius: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
     alignItems: 'center',
-    width: '100%',
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 3 },
-    elevation: 3,
   },
   sectionTitle: {
-    fontSize: 22,
-    fontWeight: '600',
-    marginBottom: 10,
+    fontSize: 20,
+    fontWeight: '700',
     color: '#ff6f61',
-  },
-  sectionDescription: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: '#6d6d6d',
-    marginBottom: 20,
-  },
-  swipeButton: {
-    backgroundColor: '#ff6f61',
-    padding: 12,
-    borderRadius: 25,
-    width: '60%',
-    alignItems: 'center',
-  },
-  swipeButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  progressBarContainer: {
-    width: '100%',
-    height: 10,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
-    marginVertical: 10,
-  },
-  progressBar: {
-    width: '70%',
-    height: '100%',
-    backgroundColor: '#ff6f61',
-    borderRadius: 5,
-  },
-  progressText: {
-    fontSize: 16,
-    color: '#ff6f61',
-    marginBottom: 20,
+    marginBottom: 8,
   },
   button: {
     backgroundColor: '#ff6f61',
-    padding: 10,
-    borderRadius: 5,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 10,
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: '600',
   },
-  navigationContainer: {
-    marginTop: 20,
-    width: '100%',
-    alignItems: 'center',
+  bottomNavBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 12,
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#e0e0e0',
+    elevation: 2,
   },
   navButton: {
-    backgroundColor: '#ff6f61',
-    padding: 15,
-    borderRadius: 25,
-    marginVertical: 10,
-    width: '80%',
     alignItems: 'center',
   },
   navButtonText: {
-    color: '#fff',
-    fontSize: 18,
+    fontSize: 16,
+    color: '#ff6f61',
+    fontWeight: '600',
   },
 });
+
+
 
 export default HomeScreen;

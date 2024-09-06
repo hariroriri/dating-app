@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Header from '../components/Header';
 
 const messagesData = [
@@ -17,21 +17,27 @@ const MessageItem = ({ sender, message }) => (
 );
 
 const MessagesScreen = () => (
-  <View style={styles.container}>
-    {/* <Header title="Messages" /> */}
-    <FlatList
-      data={messagesData}
-      renderItem={({ item }) => <MessageItem sender={item.sender} message={item.message} />}
-      keyExtractor={item => item.id}
-      contentContainerStyle={styles.listContainer}
-    />
-    <TouchableOpacity style={styles.newMessageButton}>
-      <Text style={styles.newMessageButtonText}>New Message</Text>
-    </TouchableOpacity>
-  </View>
+  <SafeAreaView style={styles.safeArea}>
+    <View style={styles.container}>
+      {/* <Header title="Messages" /> */}
+      <FlatList
+        data={messagesData}
+        renderItem={({ item }) => <MessageItem sender={item.sender} message={item.message} />}
+        keyExtractor={item => item.id}
+        contentContainerStyle={styles.listContainer}
+      />
+      <TouchableOpacity style={styles.newMessageButton}>
+        <Text style={styles.newMessageButtonText}>New Message</Text>
+      </TouchableOpacity>
+    </View>
+  </SafeAreaView>
 );
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f4f4f9', 
+  },
   container: {
     flex: 1,
     backgroundColor: '#f4f4f9',
